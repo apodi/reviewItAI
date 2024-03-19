@@ -1,44 +1,74 @@
-require('dotenv').config();
 import * as vscode from 'vscode';
-import axios from 'axios';
+import { OpenAI } from 'openai';
+import * as dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+function getApiKey(): string {
+    const config = vscode.workspace.getConfiguration('reviewit');
+    const apiKey = config.get<string>('apiKey', '');
+    return apiKey;
+}
+
+const openai = new OpenAI({ apiKey: (process.env.ENV === 'development') ? process.env.OPENAI_API_KEY : getApiKey() });
 
 export function activate(context: vscode.ExtensionContext) {
+    // Create an output channel for OpenAI code reviews
+    const reviewOutputChannel = vscode.window.createOutputChannel("OpenAI Code Review");
+
     let disposable = vscode.commands.registerCommand('extension.openAIReview', async () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
-            vscode.window.showInformationMessage('No code found or no file is open');
+            vscode.window.showInformationMessage('Open a file and select some text to review.');
             return;
         }
 
-        const text = editor.document.getText(editor.selection) || editor.document.getText();
-        try {
-            const response = await axios.post(
-                'https://api.openai.com/v1/completions',
-                {
-                    model: "code-davinci-003",
-                    prompt: `Review the following code snippet for errors, best practices, and optimization opportunities:\n\n${text}`,
-                    temperature: 0.5,
-                    max_tokens: 150,
+        const document = editor.document;
+        const selection = editor.selection;
+        const text = document.getText(selection);
+
+        if (!text) {
+            vscode.window.showInformationMessage('Please select some text to review.');
+            return;
+        }
+
+        vscode.window.showQuickPick(['View in Output Panel', 'View as Notification'], {
+            placeHolder: 'How would you like to view the review suggestions?',
+        }).then(async (choice) => {
+            try {
+                const response = await openai.chat.completions.create({
+                    model: "gpt-3.5-turbo-0125",
+                    messages: [{ role: 'user', content: `# Code review\n${text}\n## Suggestions:` }],
+                    temperature: 0.7,
+                    max_tokens: 4000,
                     top_p: 1.0,
                     frequency_penalty: 0.0,
                     presence_penalty: 0.0,
-                },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
+                });
 
-            vscode.window.showInformationMessage(response.data.choices[0].text.trim());
-        } catch (error) {
-            console.error("Error calling OpenAI:", error);
-            vscode.window.showErrorMessage("Error reviewing code. Please check the console for more information.");
-        }
+                if (response && response.choices && response.choices.length > 0) {
+                    const message = response.choices[0].message.content?.trim();
+                    if (message) {
+                        if (choice === 'View in Output Panel') {
+                            reviewOutputChannel.clear();
+                            reviewOutputChannel.appendLine(message);
+                            reviewOutputChannel.show(true);
+                        } else if (choice === 'View as Notification') {
+                            vscode.window.showInformationMessage(message, { modal: true });
+                        }
+                    } else {
+                        vscode.window.showErrorMessage('No review suggestions were found.');
+                    }
+                } else {
+                    vscode.window.showErrorMessage('No review suggestions were found.');
+                }
+            } catch (error) {
+                console.error('Failed to review code:', error);
+                vscode.window.showErrorMessage('Failed to review code.');
+            }
+        });
     });
 
     context.subscriptions.push(disposable);
 }
-
-export function deactivate() {}

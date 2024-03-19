@@ -14,10 +14,22 @@
   "contributes": {
     "commands": [
       {
-        "command": "reviewit.helloWorld",
-        "title": "Hello World"
+        "command": "extension.openAIReview",
+        "title": "Review Code with OpenAI"
       }
-    ]
+    ],
+    "configuration": [
+      {
+          "title": "My Code Review Tool",
+          "properties": {
+              "reviewit.apiKey": {
+                  "type": "string",
+                  "default": "",
+                  "description": "API Key for My Code Review Tool"
+              }
+          }
+      }
+  ]
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
@@ -32,7 +44,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
-    "@types/node": "18.x",
+    "@types/node": "^18.19.24",
     "@types/vscode": "^1.87.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
@@ -47,6 +59,7 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "axios": "^1.6.8",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "openai": "^4.29.1"
   }
 }
