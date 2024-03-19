@@ -1,71 +1,80 @@
-# reviewit README
+# reviewIt README
 
-This is the README for your extension "reviewit". After writing up a brief description, we recommend including the following sections.
+This is the README for the "reviewIt" extension, your AI-powered assistant for code reviews within VSCode. Leverage the cutting-edge capabilities of OpenAI directly in your editor to enhance code quality, adhere to best practices, and learn on the go.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+"reviewIt" integrates OpenAI's GPT models to provide real-time code reviews, actionable suggestions, and coding best practices. Whether you're writing JavaScript, Python, or any other supported language, "reviewIt" is here to guide you towards better coding standards.
 
-For example if there is an image subfolder under your extension project workspace:
+- **Real-Time Code Reviews**: Select a block of code and receive instant feedback.
+- **Actionable Suggestions**: Get specific advice on how to improve your code.
+- **Seamless Integration**: Works within your VSCode environment without disrupting your workflow.
 
-\!\[feature X\]\(images/feature-x.png\)
+![feature demonstration](images/feature-demo.gif)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+> Tip: For an effective demonstration, consider creating short, focused animations that showcase your extension in action.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+To use "reviewIt", you'll need:
+- An active internet connection.
+- An OpenAI API key, which you can obtain [here](https://openai.com/api/).
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+"reviewIt" adds the following settings for customization and control:
 
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+- \`reviewit.apiKey\`: Your OpenAI API key for enabling the code review features.
+  
+To set your OpenAI API key in VSCode, go to \`Settings > Extensions > reviewIt\` and enter your key in the \`API Key\` field.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+No known issues at this time. For any bugs or unexpected behavior, please open an issue on the [GitHub repository](https://github.com/yourusername/reviewit).
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+Users appreciate detailed release notes as you update your extension.
 
 ### 1.0.0
 
-Initial release of ...
+Initial release of reviewIt:
+- Basic code review capabilities.
+- Integration with OpenAI GPT models.
 
 ### 1.0.1
 
-Fixed issue #.
+- Improved error handling.
+- Enhanced feedback specificity.
 
 ### 1.1.0
 
-Added features X, Y, and Z.
+- Added support for multiple programming languages.
+- Introduced customizable review intensity settings.
 
 ---
 
-## Following extension guidelines
+## GitHub Repository
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+For more information, to contribute, or to report issues, please visit our [GitHub repository](https://github.com/apodi/reviewItAI).
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
 
-## Working with Markdown
+## Following Extension Guidelines
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+Ensure to read through and follow the best practices as outlined in the [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines).
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+## Working with Markdown in VSCode
 
-## For more information
+VSCode provides excellent support for Markdown editing, with useful shortcuts and preview options:
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+- Split the editor (\`Cmd+\\\` on macOS or \`Ctrl+\\\` on Windows and Linux).
+- Toggle preview (\`Shift+Cmd+V\` on macOS or \`Shift+Ctrl+V\` on Windows and Linux).
+- Use \`Ctrl+Space\` (Windows, Linux, macOS) for a list of Markdown snippets.
 
-**Enjoy!**
+For more detailed information on working with Markdown in VSCode, refer to:
+
+- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
+- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+
+**Enjoy coding with reviewIt, your AI-powered code review companion!**
+EOF
